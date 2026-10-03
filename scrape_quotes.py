@@ -30,7 +30,7 @@ def extract_quotes_data(html: str) -> str:
     # 2. پیدا کردن تمام جعبه های نقل قول
     quote_boxes = soup.find_all("div", class_="quote")
 
-    extract_items = []
+    extracted_items = []
 
     # 3. استخراج اطلاعات از درون هر جعبه
     for box in quote_boxes:
@@ -68,7 +68,15 @@ def main():
 quotes_list = extract_quotes_data(raw_html)
 
 # نمایش 3 مورد اول برای بررسی
-print(f" تعداد")
+print(f" تعداد {len(quotes_list)} مطلب با موفقیت خوانده شد:\n")
+for idx, item in enumerate(quotes_list[:3], start=1):
+    print(f"[{idx}] {item['quote']}")
+    print(f"  نویسنده: {item['author']}\n")
+
+
+if __name__ == "__main__":
+    main()
+
 
 
 

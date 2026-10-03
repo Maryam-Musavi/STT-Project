@@ -11,12 +11,19 @@ def fetch_html(url: str) -> str:
     """
     دریافت کدهای خام از صفحه اینترنت
     """
-    # 1. Send Request
-    response = requests.get(url, timeout=10)
-
-    # 2. Return text if successful
-    if response.status_code == 200:
-        return response.text
+    try:
+        # 1. Send Request
+        response = requests.get(url, timeout=20)
+        # 2. Return text if successful
+        if response.status_code == 200:
+            return response.text
+        return ""
+    except Exception as error:
+        print(f"خطال دریافت صفحه: {error}")
+        return ""
+    
+    
+        
     return ""
 
 def extract_quotes_data(html: str) -> str:
@@ -37,7 +44,7 @@ def extract_quotes_data(html: str) -> str:
         # پیدا کردن تگ متنی نقل قول
         text_elemnt = box.find("span", class_="text")
         # پیدا کردن تگ نام نویسنده
-        author_element = box.find("Small", class_="author")
+        author_element = box.find("small", class_="author")
 
         quote_text = text_elemnt.text.strip() if text_elemnt else "بدون متن"
         author_name = author_element.text.strip() if author_element else "ناشناس"
@@ -65,13 +72,13 @@ def main():
         return
 
 #پردازش استخراج
-quotes_list = extract_quotes_data(raw_html)
+    quotes_list = extract_quotes_data(raw_html)
 
 # نمایش 3 مورد اول برای بررسی
-print(f" تعداد {len(quotes_list)} مطلب با موفقیت خوانده شد:\n")
-for idx, item in enumerate(quotes_list[:3], start=1):
-    print(f"[{idx}] {item['quote']}")
-    print(f"  نویسنده: {item['author']}\n")
+    print(f" تعداد {len(quotes_list)} مطلب با موفقیت خوانده شد:\n")
+    for idx, item in enumerate(quotes_list[:3], start=1):
+        print(f"[{idx}] {item['quote']}")
+        print(f"  نویسنده: {item['author']}\n")
 
 
 if __name__ == "__main__":

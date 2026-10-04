@@ -1,0 +1,41 @@
+body {
+    front-family: sans-serif;
+    background: #f4f6f6;
+    padding: 30px;
+    text-align: center;
+}
+
+.btn {
+    padding: 12px 24px;
+    font-size: 16px;
+    cursor: pointer;
+    background: #2b78e4;
+    color: white;
+    border: none;
+    border-radius: 6px;
+}
+
+.btn:hover {
+    background: #1c5ec4;
+}
+
+.btn:disabled {
+    background: #a0bfe8;
+    cursor: not-allowed;
+}
+
+.card-countainer {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-width: 650px;
+    margin: 25px auto;
+    text-align: right;
+}
+
+.card {
+    background: white;
+    padding: 15px 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px ;
+}

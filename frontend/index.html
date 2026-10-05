@@ -2,18 +2,25 @@
 <html lang="fa" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <title>کاپ کیک - جستوجوی یوتیوب</title>
+    <title>کاپ کیک - جستوجوی صوتی</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
-        <h1>جستوجوی ویدیوی آموزشی</h1>
+        <h1>جستوجوی ویدیوی آموزشی با صدا</h1>
 
-        <!--کادر ورودی برای موضوع جستوجو-->
+        <!--بخش جصتوجو متنی قبلی-->
         <input type="text" id="search-input" placeholder="مثلا: آموزش پایتون ...">
 
         <!--دکمه جستوجو-->
-        <button id="search-btn">جستوجو</button>
+        <button id="search-btn">جستوجو با متن</button>
+        <hr style="margin: 20px 0; border: 0.5px solid #add;">
+
+        <!--بخش جدید: ضبط ویس-->
+        <div class="voice-section">
+            <button id="record-btn">شروع صبط ویس</button>
+            <button id="stop-btn" disabled>توقف و ارسال</button>
+        </div>
 
         <p id="result">نتیجه اینجا نمایش داده می شود ...</p>
     </div>

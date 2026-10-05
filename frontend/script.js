@@ -1,9 +1,19 @@
 // 1. انتخاب المانها از طریق id
 const searchInput = document.getElementById("search-input");
 const searchBtn = document.getElementById("search-btn");
+const recordBtn = document.getElementById("record-btn");
+const stopBtn = document.getElementById("stop-btn");
 const resultText = document.getElementById("result");
 
-// 2. اضافه کردن رویداد کلیک به دکمه
+
+//متغیرهای مورد نیاز برای ضبط صدا
+let mediaRecorder;
+let audioChunks = [];
+
+// ==========================================
+// بخش جستجوی متنی (از مرحله قبل)
+// ==========================================
+
 searchBtn.addEventListener("click", async () => {
     // خواندن متنی که کاربر تایپ کرده
     const query = searchInput.value.trim();
@@ -11,7 +21,6 @@ searchBtn.addEventListener("click", async () => {
     // اگر کاربر چیزی تایپ نکرده بود بهش هشدار بده
     if (!query) {
         resultText.innerText = "لطفا ابندا یک موضوع برای جستوجو بنویسید!";
-
         return;
     }
 
@@ -34,3 +43,52 @@ searchBtn.addEventListener("click", async () => {
     }
 });
 
+// ==========================================
+// بخش جدید: ضبط صدا و ارسال به بک‌اند
+// ==========================================
+
+// دکمه شروع صبط
+recordBtn.addEventListener("click", async () => {
+    try {
+        // 1. درخواست دسترسی به میکروفون کاربر
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true});
+
+        mediaRecorder = new MediaRecorder(stream);
+        audioChunks = []; //خالی کردن حافظه قبلی
+
+        // 2. جمع آوری داده های صوتی وقتی ضبط در جزیان است
+        mediaRecorder.ondataavailable = (event) => {
+            audioChunks.push(event.data);
+        };
+
+        // 3. کاری که پس از توقف صبط باید انجام شود
+        mediaRecorder.onstop = async () => {
+            // از تکه های جمع آوری شده Blob ساخت یک فایل صوتی
+            const audioBlob = new Blob(audioChunks, { type: "audio/webm" });
+
+            //قرار دادن فایل صوتی داخل یک فرم استاندارد برای ارسال
+            const formData = new FormData();
+            formData.append("audio_file", audioBlob, "voice.webm");
+
+            resultText.innerText = "در حال ارسال فایل صوتی به بک اند...";
+
+            try {
+                //ارسال درخواست POST حاوی فایل به بک اند
+                const response = await fetch("http://127.0.0.1:8000/upload-audio", {
+                    method: "POST",
+                    body: FormData
+                });
+
+                const data = await response.json();
+                resultText.innerText = data.message;
+            } catch (error) {
+                resultText.innerText = "خطا در ارسال فایل صوتی به بک امد!";
+                console.error("Error", error);
+            }
+        };
+    
+    }
+
+
+
+})

@@ -6,7 +6,7 @@ const resultText = document.getElementById("result");
 // 2. اضافه کردن رویداد کلیک به دکمه
 searchBtn.addEventListener("click", async () => {
     // خواندن متنی که کاربر تایپ کرده
-    const query = searchInput.ariaValueMax.trim();
+    const query = searchInput.value.trim();
 
     // اگر کاربر چیزی تایپ نکرده بود بهش هشدار بده
     if (!query) {
@@ -19,7 +19,7 @@ searchBtn.addEventListener("click", async () => {
 
     try {
         // 3. ارسال درخواست به مسیر جدید همراه با پارامتر جستوجو
-        const response = await fetch(`http://127.0.0.1:8000/search?query=${endcodeURLComponent(query)}`);
+        const response = await fetch(`http://127.0.0.1:8000/search?query=${encodeURIComponent(query)}`);
 
         // 4. تبدیل جواب به فرمت JSON
         const data = await response.json();

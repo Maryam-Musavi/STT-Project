@@ -8,10 +8,12 @@ testBtn.addEventListener("click", async () => {
 
     try {
         // 3. ارسال درخواست به بک اند پایتون
-        const response = await fetch("http://127.0.0.1.8000/")
+        const response = await fetch("http://127.0.0.1:8000/")
+        console.log("2. پاسخ خام سرور دریافت شد", response.status);
 
         // 4. تبدیل جواب به فرمت JSON
         const data = await response.json();
+        console.log("3. داده تبدیل شد به json:, data");
 
         // 5. نمایش پیام دریافتی روی صفحه
         resultText.innerText = "پاسخ از بک اند: " + data.message;
@@ -21,3 +23,4 @@ testBtn.addEventListener("click", async () => {
         console.error("Error:", error);
     }
 });
+

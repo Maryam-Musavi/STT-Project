@@ -35,3 +35,17 @@ button:hover {
     font-weight: bold;
     color: #333;
 }
+
+input[type="text"] {
+    padding: 10px 15px;
+    font-size: 15px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    width: 22px;
+    outline: none;
+    margin-bottom: 10px;
+}
+
+input[type="text"]:focus {
+    border-color: #4caf50;
+}

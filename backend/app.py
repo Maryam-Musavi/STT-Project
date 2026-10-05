@@ -19,3 +19,17 @@ app.add_middleware(
 @app.get("/")
 def read_root():
     return {"message": "Backend is working!"}
+
+@app.get("/search")
+def search_youtube(query: str):
+    """
+    موضوع جستوجو را از فدانت  میگیرد و فعلا 
+    تاییدیه را بر می گرداند.
+    در مراحل بعد، وب اسکرپینگ یوتیوب را
+    اینجا وصل میکنیم
+    """
+    print(f"درخواست جستوجو برای موضوع: {query}")
+    return {
+        "status": "succss",
+        "message": f"بک اند موضوع {query} را با موفقیت دریافت کرد!"
+    }

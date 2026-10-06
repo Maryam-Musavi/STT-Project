@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, UploadFile, File
 from fastapi.middleware.cors import CORSMiddleware
 import shutil
 import os
@@ -19,7 +19,6 @@ app.add_middleware(
 UPLOAD_DIR = "uploaded_audio"
 os.makedirs(UPLOAD_DIR, exist_ok=True)
 
-
 # 2. تعریف کردن یک مسیر (Route)
 # وقتی کسی به آدرس اصلی ("/") سر بزند، این تابع اجرا میشود
 @app.get("/")
@@ -30,7 +29,6 @@ def home():
 def search(query: str):
     return {"message": f"بک اند موضوع {query} را با موفقیت دریافت کرد!"}
    
-
 # روت جدید: دریافت ویس از فرانت اند
 @app.post("/upload-audio")
 async def upload_audio(audio_file: UploadFile = File(...)):
@@ -42,13 +40,10 @@ async def upload_audio(audio_file: UploadFile = File(...)):
         shutil.copyfileobj(audio_file.file, buffer)
 
     #حجم فایل را برای گزارش به کار حساب می کنیم
-    file_size_kb = os.path.getsize
+    file_size_kb = os.path.getsize(file_path) / 1024
 
-
-
-
-    print(f"درخواست جستوجو برای موضوع: {query}")
+    print(f"فایل صوتی با موفقیت ذخیره شد {audio_file.filename}")
     return {
         "status": "succss",
-        "message": f"بک اند موضوع {query} را با موفقیت دریافت کرد!"
+        "message": f"فایل صوتی با حجم {file_size_kb:.2f} کیلوبایت با موفقیت دریافت شد!"
     }

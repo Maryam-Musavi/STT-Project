@@ -78,7 +78,6 @@ recordBtn.addEventListener("click", async () => {
                     method: "POST",
                     body: FormData
                 });
-
                 const data = await response.json();
                 resultText.innerText = data.message;
             } catch (error) {
@@ -86,9 +85,23 @@ recordBtn.addEventListener("click", async () => {
                 console.error("Error", error);
             }
         };
-    
+        // شروع فرآیند ضبط و تغییر وضعیت دکمه ها
+        mediaRecorder.start();
+        resultText.innerText = "در حال ضبط صدا ... صحبت کنید!";
+        recordBtn.disabled = true;
+        stopBtn.disabled = false;
+
+    } catch (error) {
+        resultText.innerText = "دسترسی به میکروفون داده نشده یا خطایی رخ داد!";
+        console.error("Microphone error:", error);
     }
+});
 
-
-
+// دکمه توقف ضبط
+stopBtn.addEventListener("click", () => {
+    if (mediaRecorder && mediaRecorder.state !== "inactive") {
+        mediaRecorder.stop();
+        recordBtn.stop = false;
+        stopBtn.disabled = true;
+    }
 })

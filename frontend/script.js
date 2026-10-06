@@ -56,7 +56,7 @@ recordBtn.addEventListener("click", async () => {
         mediaRecorder = new MediaRecorder(stream);
         audioChunks = []; //خالی کردن حافظه قبلی
 
-        // 2. جمع آوری داده های صوتی وقتی ضبط در جزیان است
+        // 2. جمع آوری داده های صوتی وقتی ضبط در جریان است
         mediaRecorder.ondataavailable = (event) => {
             audioChunks.push(event.data);
         };
@@ -76,7 +76,7 @@ recordBtn.addEventListener("click", async () => {
                 //ارسال درخواست POST حاوی فایل به بک اند
                 const response = await fetch("http://127.0.0.1:8000/upload-audio", {
                     method: "POST",
-                    body: FormData
+                    body: formData
                 });
                 const data = await response.json();
                 resultText.innerText = data.message;
@@ -101,7 +101,7 @@ recordBtn.addEventListener("click", async () => {
 stopBtn.addEventListener("click", () => {
     if (mediaRecorder && mediaRecorder.state !== "inactive") {
         mediaRecorder.stop();
-        recordBtn.stop = false;
+        recordBtn.disabled = false;
         stopBtn.disabled = true;
     }
 })

@@ -1,0 +1,7 @@
+pip
+rich
+PyAudio
+readchar
+playsound3
+openai-whisper
+SpeechRecognition

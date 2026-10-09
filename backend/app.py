@@ -2,9 +2,11 @@ from fastapi import FastAPI, UploadFile, File
 from fastapi.middleware.cors import CORSMiddleware
 import shutil
 import os
+import time
+import whisper
 
 # 1.ساختن یک اپلیکیشن (نمونه ای از FastAPI)
-app = FastAPI()
+app = FastAPI(title="Speach to Text API")
 
 # به مرورگر اجازه می دهیم از هر مبدایی با بکند حرف بزند: تنظیمات CORS
 app.add_middleware(
@@ -19,16 +21,17 @@ app.add_middleware(
 UPLOAD_DIR = "uploaded_audio"
 os.makedirs(UPLOAD_DIR, exist_ok=True)
 
+# بارگذاری مدل Whisper یک‌بار هنگام استارت سرور
+print("در حال بارگذاری مدل هوش مصنوعی Whisper...")
+model = whisper.load_model("base")
+print("مدل Whisper آماده استفاده است!")
+
 # 2. تعریف کردن یک مسیر (Route)
 # وقتی کسی به آدرس اصلی ("/") سر بزند، این تابع اجرا میشود
 @app.get("/")
 def home():
     return {"message": "سرور فعال است!"}
 
-@app.get("/search")
-def search(query: str):
-    return {"message": f"بک اند موضوع {query} را با موفقیت دریافت کرد!"}
-   
 # روت جدید: دریافت ویس از فرانت اند
 @app.post("/upload-audio")
 async def upload_audio(audio_file: UploadFile = File(...)):

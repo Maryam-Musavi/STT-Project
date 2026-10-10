@@ -53,7 +53,7 @@ async def upload_audio(audio_file: UploadFile = File(...)):
 
     
     return {
-        "status": "succss",
+        "status": "success",
         "filename": audio_file.filename,
         "size_kb": round(file_size_kb, 2),
         "text": result["text"].strip(),

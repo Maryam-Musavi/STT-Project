@@ -45,8 +45,19 @@ async def upload_audio(audio_file: UploadFile = File(...)):
     #حجم فایل را برای گزارش به کار حساب می کنیم
     file_size_kb = os.path.getsize(file_path) / 1024
 
+
+    start_time = time.time()
+    result = model.transcribe(file_path)
+    elapsed_time = time.time() - start_time
+
+
     print(f"فایل صوتی با موفقیت ذخیره شد {audio_file.filename}")
     return {
         "status": "succss",
-        "message": f"فایل صوتی با حجم {file_size_kb:.2f} کیلوبایت با موفقیت دریافت شد!"
+        "filename": audio_file.filename,
+        "size_kb": round(file_size_kb, 2),
+        "text": result["text"].strip(),
+        "detected_language": result.get("language", "unknown"),
+        "processing_time_sec": round(elapsed_time, 2)
     }
+

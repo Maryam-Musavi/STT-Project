@@ -23,7 +23,7 @@ os.makedirs(UPLOAD_DIR, exist_ok=True)
 
 # بارگذاری مدل Whisper یک‌بار هنگام استارت سرور
 print("در حال بارگذاری مدل هوش مصنوعی Whisper...")
-model = whisper.load_model("base")
+model = whisper.load_model("turbo")
 print("مدل Whisper آماده استفاده است!")
 
 # 2. تعریف کردن یک مسیر (Route)

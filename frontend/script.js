@@ -79,7 +79,7 @@ recordBtn.addEventListener("click", async () => {
                     body: formData
                 });
                 const data = await response.json();
-                resultText.innerText = data.message;
+                resultText.innerText = data.text;
             } catch (error) {
                 resultText.innerText = "خطا در ارسال فایل صوتی به بک امد!";
                 console.error("Error", error);

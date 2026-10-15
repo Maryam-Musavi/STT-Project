@@ -47,7 +47,7 @@ async def upload_audio(audio_file: UploadFile = File(...)):
     print(f"فایل صوتی با موفقیت ذخیره شد {audio_file.filename}")
 
     start_time = time.time()
-    result = model.transcribe(file_path)
+    result = model.transcribe(file_path, language="fa")
     elapsed_time = time.time() - start_time
 
 
